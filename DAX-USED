@@ -1,0 +1,24 @@
+1.Present days = 
+
+var PresentDays = CALCULATE(COUNT('Combine_final_data'[Value]),'Combine_final_data'[Value]="P")
+return PresentDays+[WorkFromHomeCount]
+
+2.Present% = 
+DIVIDE([Present days],[Total working days],0)
+
+3.SL% = 
+DIVIDE('Measure Table'[SleepLeaveCount],'Measure Table'[Total working days],0)
+
+4.SleepLeaveCount = 
+SUM(Combine_final_data[SL])
+
+5.Total working days = 
+var working_days = COUNT('Combine_final_data'[Value]) 
+var non_working=CALCULATE(COUNT('Combine_final_data'[Value]),'Combine_final_data'[value] in {"WO","HO"}) 
+return working_days-non_working
+
+6.WFH% = 
+DIVIDE('Measure Table'[WorkFromHomeCount],'Measure Table'[Present days])
+
+7.WorkFromHomeCount = 
+SUM(Combine_final_data[WFH])
